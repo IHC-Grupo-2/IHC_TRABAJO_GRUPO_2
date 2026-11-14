@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="ResiliNet: una propuesta de alerta temprana, evacuación y comunicación comunitaria ante huaicos, incluso sin internet.">
+    <title>ResiliNet | Alerta y respuesta comunitaria</title>
+    <link rel="icon" href="favicon.ico" sizes="32x32">
+    <link rel="stylesheet" href="assets/styles/styles.css">
+    <script src="assets/scripts/main.js" defer></script>
+</head>
+<body>
+    <a class="saltar-contenido" href="#contenido">Ir al contenido</a>
+
+    <header class="cabecera">
+        <div class="cabecera-contenido">
+            <a class="marca" href="#inicio" aria-label="ResiliNet, inicio">
+                <img src="assets/images/logo-resilinet.png" alt="" width="40" height="40">
+                <span>ResiliNet</span>
+            </a>
+            <button class="boton-menu" type="button" aria-expanded="false" aria-controls="menu-principal">Menú <span aria-hidden="true">☰</span></button>
+            <div class="barra-menu" id="menu-principal">
+                <nav class="navegacion" aria-label="Navegación principal">
+                    <a class="activo" href="#inicio" aria-current="page">Inicio</a>
+                    <button type="button" data-info="mapa">Mapa en Vivo</button>
+                    <a href="#alertas">Centro de Alertas</a>
+                    <button type="button" data-info="reporte">Reportar Riesgo</button>
+                    <a href="#refugios">Refugios</a>
+                </nav>
+                <div class="acciones-cabecera">
+                    <button class="boton boton-descarga" type="button" data-info="app">Descargar App</button>
+                    <button class="boton boton-sesion" type="button" data-info="sesion">Iniciar Sesión</button>
+                    <button class="boton boton-registro" type="button" data-registro>REGISTRARSE</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="contenido" id="contenido">
+        <section class="presentacion" id="inicio" aria-labelledby="titulo-principal">
+            <div class="presentacion-texto">
+                <p class="antetitulo">Plataforma comunitaria de alerta temprana y evacuación</p>
+                <h1 id="titulo-principal"><span>Resiliencia y comunicación ante huaicos,</span> <span>incluso sin señal de internet ni telefonía.</span></h1>
+                <p class="descripcion">Conectamos vecinos, brigadistas y autoridades mediante cartografía fuera de línea y malla Bluetooth.</p>
+                <div class="acciones-presentacion">
+                    <button class="boton boton-principal" type="button" data-info="app">DESCARGAR APP MÓVIL</button>
+                    <button class="boton boton-secundario" type="button" data-info="mapa">VER VISOR TERRITORIAL</button>
+                </div>
+            </div>
+
+            <aside class="panel-alertas" id="alertas" aria-labelledby="titulo-alertas">
+                <div class="panel-titulo">
+                    <h2 id="titulo-alertas">ESTADO DE CUENCAS</h2>
+                    <span class="etiqueta-demo">Demostración</span>
+                </div>
+                <div class="panel-contenido">
+                    <div class="estado-cuenca">
+                        <h3>Quebrada Pedregal (Chosica)</h3>
+                        <p>Nivel Amarillo · Lluvia intensa en cuenca alta detectada por vigías</p>
+                        <div class="barra-riesgo precaucion" aria-hidden="true"><span></span></div>
+                    </div>
+                    <div class="estado-cuenca">
+                        <h3>Quebrada Carossio</h3>
+                        <p>Nivel Verde · Flujo dentro de márgenes normales</p>
+                        <div class="barra-riesgo segura" aria-hidden="true"><span></span></div>
+                    </div>
+                    <button class="boton boton-boletin" type="button" data-info="boletin">VER BOLETÍN DE EJEMPLO</button>
+                    <p class="nota-demo">Datos de ejemplo del prototipo. No son alertas reales.</p>
+                </div>
+            </aside>
+        </section>
+
+        <section class="caracteristicas" aria-label="Características de ResiliNet">
+            <article class="tarjeta" id="cartografia">
+                <div class="icono-tarjeta"><img src="assets/images/icono-mapa.svg" alt="" loading="lazy"></div>
+                <h2>Descarga Previa de Cartografía</h2>
+                <p>Descargue los paquetes vectoriales de su distrito antes de que comience la temporada de lluvias para operar sin internet.</p>
+            </article>
+            <article class="tarjeta" id="red-comunitaria">
+                <div class="icono-tarjeta"><img src="assets/images/icono-red.svg" alt="" loading="lazy"></div>
+                <h2>Red Comunitaria BLE Mesh</h2>
+                <p>Conozca cómo opera el protocolo de salto entre dispositivos móviles cuando colapsan las antenas de telecomunicación celular.</p>
+            </article>
+            <article class="tarjeta" id="refugios">
+                <div class="icono-tarjeta"><img src="assets/images/icono-refugio.svg" alt="" loading="lazy"></div>
+                <h2>Puntos de Encuentro y Refugios</h2>
+                <p>Localice las losas deportivas y colegios situados en cotas altas libres de inundación, sus aforos y recursos disponibles.</p>
+            </article>
+        </section>
+        <noscript><p class="aviso">Activa JavaScript para abrir las vistas previas y probar el formulario. También puedes consultar el <a href="https://www.figma.com/design/RCyX6w1rBZle6BDl1vobjG/PROTOTIPO-RESILINET?node-id=0-1">prototipo de ResiliNet en Figma</a>.</p></noscript>
+    </main>
+
+    <footer class="pie">
+        <div class="pie-contenido">
+            <div>
+                <p class="pie-titulo">ResiliNet · Sistema Comunitario de Alerta y Respuesta ante Huaicos</p>
+                <p>Una propuesta para la protección y organización de comunidades en zonas de riesgo.</p>
+            </div>
+            <div>
+                <p class="pie-titulo">Sobre el proyecto</p>
+                <p>IHC y Tecnologías Móviles · Grupo 2</p>
+                <a href="https://www.figma.com/design/A73C7JusqqelOPR779nzMy/Mockup?node-id=89-1423" target="_blank" rel="noopener noreferrer">Ver diseño en Figma <span class="solo-lectores">(se abre en otra pestaña)</span></a>
+            </div>
+            <p class="ubicacion">Lima, Perú · 2026</p>
+        </div>
+    </footer>
+
+    <dialog id="dialogo-info" aria-labelledby="titulo-info" aria-describedby="texto-info">
+        <button class="cerrar-dialogo" type="button" data-cerrar aria-label="Cerrar ventana">×</button>
+        <p class="antetitulo">ResiliNet · Vista previa</p>
+        <h2 id="titulo-info"></h2>
+        <p id="texto-info"></p>
+        <a class="boton boton-principal enlace-prototipo" id="enlace-info" href="https://www.figma.com/design/A73C7JusqqelOPR779nzMy/Mockup?node-id=89-1423" target="_blank" rel="noopener noreferrer">Ver diseño <span class="solo-lectores">(se abre en otra pestaña)</span></a>
+    </dialog>
+
+    <dialog id="dialogo-registro" aria-labelledby="titulo-registro">
+        <button class="cerrar-dialogo" type="button" data-cerrar aria-label="Cerrar prerregistro">×</button>
+        <p class="antetitulo">Zona piloto</p>
+        <h2 id="titulo-registro">Prerregistro en ResiliNet</h2>
+        <p class="ayuda-formulario" id="aviso-registro">Este formulario es una demostración. Los datos no se envían ni se guardan.</p>
+        <form id="formulario-registro" aria-describedby="aviso-registro">
+            <label for="nombre">Nombre</label>
+            <input id="nombre" name="nombre" type="text" autocomplete="given-name" placeholder="Tu nombre" maxlength="60" required pattern=".*\S.*">
+            <label for="rol">¿Cómo participarías?</label>
+            <select id="rol" name="rol" required>
+                <option value="">Selecciona una opción</option>
+                <option value="residente">Residente o jefe de hogar</option>
+                <option value="brigadista">Brigadista o vecino activo</option>
+                <option value="comerciante">Comerciante o bodeguero</option>
+            </select>
+            <label for="distrito">Distrito</label>
+            <input id="distrito" name="distrito" type="text" autocomplete="address-level2" placeholder="Por ejemplo, Chosica" maxlength="80" required pattern=".*\S.*">
+            <button class="boton boton-principal" type="submit">PROBAR PRERREGISTRO</button>
+        </form>
+        <div id="resultado-registro" tabindex="-1" role="status" hidden>
+            <p id="mensaje-registro"></p>
+            <button class="boton boton-secundario" type="button" data-cerrar>VOLVER A INICIO</button>
+        </div>
+    </dialog>
+</body>
+</html>
