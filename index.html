@@ -1,168 +1,42 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>ResiliNet · Alertas y rutas de evacuación sin internet</title>
-    <meta name="description" content="ResiliNet conecta a vecinos, brigadistas y comerciantes por Bluetooth para avisar de huaicos y guiar la evacuación sin internet.">
-    <link rel="icon" href="favicon.ico">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/styles/styles.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0056B3">
+  <meta name="description" content="ResiliNet: alertas comunitarias ante huaicos, orientación hacia puntos seguros y comunicación de apoyo cuando falla internet. Proyecto académico UPC.">
+  <title>ResiliNet · La comunidad conectada también sin internet</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/styles/styles.css">
+  <script src="assets/scripts/main.js" defer></script>
 </head>
 <body>
-<a class="skip" href="#contenido">Saltar al contenido</a>
-
-<header class="top">
-    <div class="wrap top-in">
-        <a class="brand" href="#inicio" aria-label="ResiliNet, inicio">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="2.5"/><path d="M7.5 7.5a6.4 6.4 0 0 0 0 9M16.5 7.5a6.4 6.4 0 0 1 0 9M4.5 4.5a10.6 10.6 0 0 0 0 15M19.5 4.5a10.6 10.6 0 0 1 0 15"/></svg>
-            ResiliNet
-        </a>
-        <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="nav">Menú</button>
-        <nav id="nav" class="nav" aria-label="Principal">
-            <a href="#como-funciona">Cómo funciona</a>
-            <a href="#para-quien">Para quién</a>
-            <a href="#funciones">Funciones</a>
-            <a href="demo.html">Probar demo</a>
-            <a href="#equipo">Equipo</a>
-            <a class="btn btn-sec" href="#registro">Unirme al piloto</a>
-        </nav>
-    </div>
-</header>
-
-<main id="contenido">
-    <section class="hero" id="inicio">
-        <div class="wrap hero-in">
-            <div class="hero-text">
-                <h1>Cuando cae la señal, la alerta sigue llegando.</h1>
-                <p class="lead">ResiliNet avisa de huaicos y guía la evacuación a pie entre vecinos, brigadistas y comerciantes, usando Bluetooth y mapas descargados. No necesita internet ni saldo.</p>
-                <div class="cta">
-                    <a class="btn btn-act" href="#registro">Pre-registrarme gratis</a>
-                    <a class="btn btn-sec" href="demo.html">Probar las funciones</a>
-                </div>
-                <p class="note">Piloto en quebradas de Chosica, Chaclacayo y San Juan de Lurigancho.</p>
-            </div>
-
-            <div class="phone" aria-label="Simulador de la aplicación">
-                <div class="phone-bar" id="riskBar" data-level="green">
-                    <span id="riskLabel">Nivel verde · Normal</span>
-                    <span class="mesh" id="meshChip">Red malla activa: 4 nodos</span>
-                </div>
-                <div class="phone-body">
-                    <h2 id="riskTitle">Sin riesgo en tu zona</h2>
-                    <p id="riskText">Mantén Bluetooth encendido para recibir avisos de tus vecinos.</p>
-                    <div class="phone-btns">
-                        <button class="big safe" id="btnSafe" type="button">Estoy a salvo</button>
-                        <button class="big sos" id="btnSos" type="button">Auxilio</button>
-                    </div>
-                    <p class="status" id="statusMsg" role="status" aria-live="polite"></p>
-                </div>
-                <div class="sim">
-                    <span>Probar niveles de riesgo:</span>
-                    <div class="sim-btns" role="group" aria-label="Nivel de riesgo">
-                        <button type="button" data-level="green" aria-pressed="true">Verde</button>
-                        <button type="button" data-level="yellow" aria-pressed="false">Amarillo</button>
-                        <button type="button" data-level="orange" aria-pressed="false">Naranja</button>
-                        <button type="button" data-level="red" aria-pressed="false">Rojo</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="sec" id="como-funciona">
-        <div class="wrap">
-            <h2>Tres pasos, antes y durante la emergencia</h2>
-            <ol class="steps">
-                <li><h3>Prepárate con conexión</h3><p>Te registras con tu DNI, eliges tu rol y descargas el mapa de tu distrito (menos de 30 MB) junto con los puntos de encuentro.</p></li>
-                <li><h3>Recibe la alerta sin internet</h3><p>Un vigía en la parte alta emite el aviso. Otro vecino lo confirma y cada teléfono lo retransmite al siguiente por Bluetooth.</p></li>
-                <li><h3>Evacúa y avisa que estás bien</h3><p>La app traza la ruta a pie hacia la zona alta más cercana y, con un toque, informa a tu familia y a los brigadistas si estás a salvo o atrapado.</p></li>
-            </ol>
-        </div>
-    </section>
-
-    <section class="sec alt" id="para-quien">
-        <div class="wrap">
-            <h2>Una misma app, tres formas de ayudar</h2>
-            <div class="roles">
-                <article class="role">
-                    <h3>Residentes y jefes de hogar</h3>
-                    <p>Alertas por semáforo, rutas de escape sin conexión y el estado de tu familia sin hacer llamadas.</p>
-                </article>
-                <article class="role">
-                    <h3>Brigadistas de Defensa Civil</h3>
-                    <p>Un panel con cuántos vecinos están a salvo, cuántos piden auxilio y quiénes siguen sin reporte, con prioridad para niños y adultos mayores.</p>
-                </article>
-                <article class="role">
-                    <h3>Bodegueros y comerciantes</h3>
-                    <p>Cuenta regresiva de 20 a 30 minutos, lista rápida para asegurar el local y apoyo de vecinos para evacuar a un familiar.</p>
-                </article>
-            </div>
-        </div>
-    </section>
-
-    <section class="sec" id="funciones">
-        <div class="wrap">
-            <h2>Pensada para usarse con lluvia, sin luz y con estrés</h2>
-            <ul class="feats">
-                <li><strong>Red mesh Bluetooth.</strong> Cada teléfono retransmite la alerta a los vecinos cercanos.</li>
-                <li><strong>Mapas y rutas offline.</strong> Navegación GPS y recálculo cuando una vía se bloquea.</li>
-                <li><strong>Un solo toque.</strong> «Estoy a salvo» y «Auxilio» en botones de al menos 64 dp.</li>
-                <li><strong>Menos falsas alarmas.</strong> La alerta suena fuerte cuando un segundo vecino o brigadista la confirma.</li>
-                <li><strong>Alto contraste y vibración.</strong> Fondo oscuro, botones grandes y respuesta háptica.</li>
-                <li><strong>Ahorro crítico de batería.</strong> Si estás atrapado, solo queda activa la baliza de socorro.</li>
-            </ul>
-        </div>
-    </section>
-
-    <section class="sec alt" id="prueba-interactiva"><div class="wrap"><h2>Prueba ResiliNet antes de una emergencia</h2><p>Explora una demostración interactiva de alertas, evacuación, brigadas y seguridad comercial. Los datos y eventos son simulados.</p><p style="margin-top:16px"><a class="btn btn-act" href="demo.html">Abrir simulador interactivo</a></p></div></section>
-
-    <section class="sec alt" id="registro">
-        <div class="wrap reg">
-            <div>
-                <h2>Únete a la zona piloto</h2>
-                <p>Déjanos tus datos y te avisaremos cuando se organice la próxima reunión comunitaria para instalar la app.</p>
-            </div>
-            <form id="regForm" novalidate>
-                <label for="nombre">Nombre completo</label>
-                <input id="nombre" name="nombre" type="text" autocomplete="name" required>
-                <label for="correo">Correo o celular</label>
-                <input id="correo" name="correo" type="text" autocomplete="email" required>
-                <label for="rol">Soy</label>
-                <select id="rol" name="rol" required>
-                    <option value="">Elige tu rol</option>
-                    <option>Residente o jefe de hogar</option>
-                    <option>Brigadista o vecino activo</option>
-                    <option>Bodeguero o comerciante</option>
-                </select>
-                <button class="btn btn-act" type="submit">Enviar pre-registro</button>
-                <p class="form-msg" id="formMsg" role="status" aria-live="polite"></p>
-            </form>
-        </div>
-    </section>
-
-    <section class="sec" id="equipo">
-        <div class="wrap">
-            <h2>Equipo · Grupo 02</h2>
-            <p class="team-sub">1ASI0385 IHC y Tecnologías Móviles, UPC, ciclo 2026-02.</p>
-            <ul class="team">
-                <li>Rodrigo Gustavo Porras Torres</li>
-                <li>Ivette Lucero Villavicencio Dávila</li>
-                <li>Darío Enrique Farfán Abanto</li>
-                <li>Jose Matias Ramos Rodriguez</li>
-                <li>Ashlee Jhamylet Manuelo Yupanqui</li>
-                <li>Daniel Eduardo Lapa De La Cruz</li>
-            </ul>
-        </div>
-    </section>
-</main>
-
-<footer class="foot">
-    <div class="wrap">© 2026 ResiliNet · Proyecto académico, Facultad de Ingeniería, UPC.</div>
-</footer>
-
-<script src="assets/scripts/main.js"></script>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+  <svg class="sprite" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><symbol id="signal" viewBox="0 0 24 24"><circle cx="12" cy="12" r="2"/><path d="M7.8 7.8a6 6 0 0 0 0 8.4m8.4-8.4a6 6 0 0 1 0 8.4M4.5 4.5a10.5 10.5 0 0 0 0 15m15-15a10.5 10.5 0 0 1 0 15"/></symbol><symbol id="arrow" viewBox="0 0 24 24"><path d="M4 12h16m-6-6 6 6-6 6"/></symbol><symbol id="shield" viewBox="0 0 24 24"><path d="M12 2 4 6v5c0 6 4.1 9.6 8 11 3.9-1.4 8-5 8-11V6l-8-4Z"/><path d="m9 12 2 2 4-4"/></symbol><symbol id="map" viewBox="0 0 24 24"><path d="m3 5 6-2 6 2 6-2v16l-6 2-6-2-6 2V5Zm6-2v16m6-14v16"/></symbol><symbol id="users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 20v-2a6 6 0 0 1 12 0v2H3Zm12-14a3 3 0 1 1 0 6m2 3a5 5 0 0 1 4 5"/></symbol><symbol id="heart" viewBox="0 0 24 24"><path d="M20.8 8.6c0 4.3-8.8 10.3-8.8 10.3S3.2 12.9 3.2 8.6A4.7 4.7 0 0 1 12 6.2a4.7 4.7 0 0 1 8.8 2.4Z"/></symbol><symbol id="store" viewBox="0 0 24 24"><path d="M3 10h18L19 4H5l-2 6Zm2 0v10h14V10m-9 10v-7h4v7"/></symbol></svg>
+  <header class="site-header"><div class="container nav-inner">
+    <a class="brand" href="#inicio" aria-label="ResiliNet, inicio"><span class="brand-symbol"><svg><use href="#signal"/></svg></span><span>Resili<span class="brand-accent">Net</span></span></a>
+    <button class="mobile-toggle" id="mobileToggle" aria-controls="mainNav" aria-expanded="false">Menú <span aria-hidden="true">☰</span></button>
+    <nav id="mainNav" class="main-nav" aria-label="Navegación principal"><a href="#como-funciona">Cómo funciona</a><a href="#segmentos">Para quién</a><a href="#funciones">Funciones</a><a href="#piloto">Piloto</a><a class="button button-blue nav-cta" href="demo.html">Probar ResiliNet <svg><use href="#arrow"/></svg></a></nav>
+  </div></header>
+  <main id="contenido">
+    <section id="inicio" class="hero"><div class="container hero-layout">
+      <div class="hero-copy"><span class="eyebrow"><span class="eyebrow-dot"></span> Tecnología comunitaria ante emergencias</span><h1>Cuando cae la señal, <span>la alerta sigue llegando.</span></h1><p>ResiliNet propone conectar a vecinos, brigadistas y comerciantes para compartir alertas de huaicos y orientar la evacuación, incluso cuando falla internet.</p><div class="hero-actions"><a class="button button-orange" href="demo.html">Explorar simulador <svg><use href="#arrow"/></svg></a><a class="button button-quiet" href="#como-funciona">Conocer la solución</a></div><div class="hero-foot"><span class="round-mark">✓</span><span>Demostración académica interactiva</span><span class="hero-sep">·</span><span>Proyecto ResiliNet · UPC 2026</span></div></div>
+      <div class="hero-visual"><div class="topographic" aria-hidden="true"></div><div class="mockup">
+        <div class="mockup-head"><span class="mockup-label"><svg><use href="#signal"/></svg> RESILINET</span><span class="mockup-connection"><span></span> RED DE PRUEBA</span></div>
+        <div class="mockup-body"><span class="small-label">ESTADO DE LA COMUNIDAD</span><div class="risk-status" id="heroRisk"><span class="risk-dot"></span><div><strong id="heroRiskTitle">Nivel verde · Normal</strong><small id="heroRiskSubtitle">Sin riesgo en el escenario de prueba</small></div></div><div class="mockup-actions"><button id="heroSafe" class="action-safe" type="button"><svg><use href="#shield"/></svg> Estoy a salvo</button><button id="heroHelp" class="action-help" type="button">Pedir ayuda</button></div><div class="mockup-result" id="heroResult" aria-live="polite">Prueba cómo respondería la interfaz ante una alerta.</div></div>
+        <div class="mockup-bottom"><span>Nivel de riesgo de demostración</span><div class="risk-pills" id="heroRiskButtons"><button class="active" data-level="green" aria-pressed="true" aria-label="Nivel verde">Verde</button><button data-level="yellow" aria-pressed="false">Amarillo</button><button data-level="orange" aria-pressed="false">Naranja</button><button data-level="red" aria-pressed="false">Rojo</button></div></div>
+      </div><div class="floating-label"><svg><use href="#shield"/></svg><div><strong>Una respuesta más rápida</strong><span>Información clara para actuar</span></div></div></div>
+    </div></section>
+    <section class="trust-bar"><div class="container trust-grid"><div><strong>3</strong><span>segmentos de usuarios</span></div><div><strong>4</strong><span>niveles de prevención</span></div><div><strong>Offline</strong><span>como objetivo de diseño</span></div><div><strong>1 toque</strong><span>para reportar tu estado</span></div></div></section>
+    <section id="como-funciona" class="section"><div class="container"><div class="section-intro"><span class="overline">CÓMO FUNCIONA</span><h2>Preparados antes. Conectados durante.</h2><p>Una experiencia organizada para que la comunidad sepa qué hacer antes y durante una emergencia.</p></div><div class="steps-grid"><article class="step"><div class="step-number">01</div><div class="step-icon"><svg><use href="#map"/></svg></div><h3>Prepárate con anticipación</h3><p>Identifica las zonas seguras y prepara mapas descargados y contactos de emergencia antes de que falle la conexión.</p></article><article class="step"><div class="step-number">02</div><div class="step-icon"><svg><use href="#signal"/></svg></div><h3>Recibe la alerta comunitaria</h3><p>La propuesta utiliza una red malla Bluetooth entre vecinos para propagar avisos cuando no hay internet.</p></article><article class="step"><div class="step-number">03</div><div class="step-icon"><svg><use href="#heart"/></svg></div><h3>Evacúa y reporta tu estado</h3><p>Sigue las instrucciones de evacuación y comunica con claridad si estás a salvo o necesitas auxilio.</p></article></div></div></section>
+    <section id="segmentos" class="section tint"><div class="container"><div class="section-intro"><span class="overline">PARA QUIÉN</span><h2>Una comunidad, tres maneras de protegerla</h2><p>Cada perfil accede a herramientas relevantes para su responsabilidad durante la emergencia.</p></div><div class="segment-grid"><article class="segment"><div class="segment-icon"><svg><use href="#users"/></svg></div><h3>Residentes y jefes de hogar</h3><p>Alertas fáciles de entender, rutas seguras y comunicación del estado familiar.</p><a href="demo.html#familia">Probar experiencia residente <svg><use href="#arrow"/></svg></a></article><article class="segment"><div class="segment-icon"><svg><use href="#shield"/></svg></div><h3>Brigadistas y voluntarios</h3><p>Panorama comunitario, solicitudes de ayuda y coordinación de tareas prioritarias.</p><a href="demo.html#brigadas">Probar coordinación <svg><use href="#arrow"/></svg></a></article><article class="segment"><div class="segment-icon"><svg><use href="#store"/></svg></div><h3>Comerciantes locales</h3><p>Preparación del negocio, cierre preventivo y apoyo a familiares vulnerables.</p><a href="demo.html#comercio">Probar experiencia comercial <svg><use href="#arrow"/></svg></a></article></div></div></section>
+    <section id="funciones" class="section"><div class="container features-layout"><div class="section-intro align-left"><span class="overline">FUNCIONALIDADES</span><h2>Diseñada para actuar, no para complicarse</h2><p>Interacciones breves, contrastes claros y mensajes precisos, de acuerdo con las guías de estilo de ResiliNet.</p><a class="button button-blue" href="demo.html">Explorar todas las funciones <svg><use href="#arrow"/></svg></a></div><div class="feature-stack"><div class="feature"><span class="feature-index">01</span><div><strong>Alertas progresivas</strong><p>Semáforo verde, amarillo, naranja y rojo con instrucciones específicas.</p></div></div><div class="feature"><span class="feature-index">02</span><div><strong>Mapas y evacuación</strong><p>Consulta de puntos de encuentro y recorridos alternativos en el prototipo.</p></div></div><div class="feature"><span class="feature-index">03</span><div><strong>Ayuda y estado familiar</strong><p>Acciones directas «Estoy a salvo» y «Auxilio», con confirmación visible.</p></div></div><div class="feature"><span class="feature-index">04</span><div><strong>Coordinación comunitaria</strong><p>Reportes vecinales, triaje de brigadistas y protección de comercios.</p></div></div></div></div></section>
+    <section id="piloto" class="section pilot"><div class="container pilot-inner"><div><span class="overline">PARTICIPA EN LA VALIDACIÓN</span><h2>Ayúdanos a mejorar ResiliNet</h2><p>Explora el prototipo y dinos qué tan claras son sus alertas, rutas e interacciones. Esta versión funciona con datos ficticios: no envía solicitudes de emergencia reales.</p><div class="pilot-places">Áreas consideradas: Chosica, Chaclacayo y San Juan de Lurigancho.</div></div><div class="pilot-card"><span class="pill"><span class="pill-dot"></span> DEMO ACADÉMICA · TB2</span><h3>Una experiencia para probar</h3><p>Sin registro y sin compartir datos personales.</p><a class="button button-orange full" href="demo.html">Entrar al simulador <svg><use href="#arrow"/></svg></a><a class="minor-link" href="#registro">También puedes dejar tu interés en el piloto</a></div></div></section>
+    <section id="registro" class="section"><div class="container register-layout"><div class="section-intro align-left"><span class="overline">PRERREGISTRO</span><h2>Conoce las próximas actividades</h2><p>Completa los campos para experimentar la validación del formulario. No se almacenan ni envían datos desde esta versión académica.</p></div><form id="regForm" novalidate class="register-form"><label for="nombre">Nombre completo</label><input type="text" id="nombre" name="nombre" autocomplete="name" placeholder="Tu nombre" required><label for="contacto">Correo o celular</label><input type="text" id="contacto" name="contacto" placeholder="ejemplo@correo.com" required><label for="rol">Me interesa como</label><select id="rol" name="rol" required><option value="">Seleccionar perfil</option><option>Residente o jefe de hogar</option><option>Brigadista o voluntario</option><option>Comerciante local</option></select><button type="submit" class="button button-blue full">Validar mi prerregistro <svg><use href="#arrow"/></svg></button><p id="formMessage" role="status" aria-live="polite" class="form-message"></p></form></div></section>
+    <section id="equipo" class="section team-section"><div class="container"><div class="section-intro"><span class="overline">EQUIPO RESILINET</span><h2>Desarrollado por Grupo 02</h2><p>Proyecto académico · IHC y Tecnologías Móviles · UPC · 2026-02</p></div><div class="team-list"><span>Rodrigo Gustavo Porras Torres</span><span>Ivette Lucero Villavicencio Dávila</span><span>Darío Enrique Farfán Abanto</span><span>Jose Matias Ramos Rodriguez</span><span>Ashlee Jhamylet Manuelo Yupanqui</span><span>Daniel Eduardo Lapa De La Cruz</span></div></div></section>
+  </main>
+  <footer class="footer"><div class="container footer-inner"><a class="brand brand-footer" href="#inicio"><span class="brand-symbol"><svg><use href="#signal"/></svg></span> ResiliNet</a><span>Proyecto académico UPC · 2026</span><span>No sustituye alertas oficiales ni servicios de emergencia.</span></div></footer>
 </body>
 </html>
