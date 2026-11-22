@@ -1,0 +1,10 @@
+'use strict';
+const $=(id)=>document.getElementById(id);
+const toggle=$('mobileToggle'),nav=$('mainNav');
+toggle.addEventListener('click',()=>{const opened=nav.classList.toggle('open');toggle.setAttribute('aria-expanded',String(opened));});
+nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{nav.classList.remove('open');toggle.setAttribute('aria-expanded','false');}));
+const labels={green:['Nivel verde · Normal','Nivel referencial · Consulta avisos oficiales'],yellow:['Nivel amarillo · Advertencia','Mantente atento a los avisos comunitarios'],orange:['Nivel naranja · Pre-evacuación','Prepara a tu familia para evacuar'],red:['Nivel rojo · Evacuación inmediata','Evacúa siguiendo indicaciones oficiales']};
+const panel=$('heroRisk');document.querySelectorAll('#heroRiskButtons button').forEach(b=>b.addEventListener('click',()=>{const risk=b.dataset.level;panel.dataset.risk=risk;$('heroRiskTitle').textContent=labels[risk][0];$('heroRiskSubtitle').textContent=labels[risk][1];document.querySelectorAll('#heroRiskButtons button').forEach(x=>{x.classList.toggle('active',x===b);x.setAttribute('aria-pressed',String(x===b));});$('heroResult').textContent='Nivel actualizado en pantalla. No se envían alertas reales.';}));
+$('heroSafe').addEventListener('click',()=>{$('heroResult').textContent='✓ Tu estado quedó registrado en esta sesión. No se envían notificaciones.';});
+$('heroHelp').addEventListener('click',()=>{$('heroResult').textContent='Solicitud registrada solo en este navegador. Accede a ResiliNet para ver las opciones de ayuda.';});
+$('regForm').addEventListener('submit',e=>{e.preventDefault();const name=$('nombre').value.trim(),contact=$('contacto').value.trim(),role=$('rol').value;const ok=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contact)||/^\+?[\d\s()\-]{7,15}$/.test(contact);$('formMessage').textContent=!name||!contact||!role?'Completa todos los campos.':!ok?'Escribe un correo o celular válido.':'✓ Datos validados en pantalla. No se guardaron ni enviaron.';if(name&&contact&&role&&ok)$('regForm').reset();});
