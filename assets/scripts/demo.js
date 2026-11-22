@@ -4,20 +4,20 @@
 // No emplea Bluetooth, geolocalización, base de datos ni servicios de rescate.
 const el = id => document.getElementById(id);
 const screenNames = {
-  resumen:['Resumen','Panorama de la comunidad','Un escenario de prueba para entender cómo ResiliNet guía una respuesta comunitaria.'],
+  resumen:['Resumen','Panorama de la comunidad','Información comunitaria, alertas preventivas y herramientas de respuesta.'],
   alertas:['Centro de alertas','Alertas y comunicación comunitaria','Observa los niveles de riesgo y el proceso de verificación entre vecinos.'],
-  mapa:['Mapa y evacuación','Encuentra un punto seguro','Explora rutas y refugios mediante un croquis de demostración.'],
-  reportar:['Reportar un riesgo','Reportes ciudadanos','Registra un incidente ficticio y observa cómo se prepara para su confirmación.'],
-  familia:['Ayuda y familia','Confirma tu estado y solicita apoyo','Comunícate con tu red familiar desde una demostración sin envíos reales.'],
-  brigadas:['Brigadistas','Coordinación de brigadas','Consulta estados comunitarios y prioriza solicitudes de ayuda de prueba.'],
+  mapa:['Mapa y evacuación','Encuentra un punto seguro','Consulta las rutas de evacuación y los puntos seguros de referencia.'],
+  reportar:['Reportar un riesgo','Reportes ciudadanos','Registra una incidencia en la sesión y revisa su estado.'],
+  familia:['Ayuda y familia','Confirma tu estado y solicita apoyo','Consulta y actualiza los estados de tus contactos en esta sesión.'],
+  brigadas:['Brigadistas','Coordinación de brigadas','Consulta estados comunitarios y organiza las solicitudes de apoyo.'],
   comercio:['Comerciantes','Protección de negocios','Ensaya el cierre preventivo y la coordinación familiar de los comerciantes.'],
   historial:['Historial','Historial local de la sesión','Consulta todas las acciones realizadas en este navegador.']
 };
 const levels = {
-  green:['Nivel verde · Normal','Sin riesgo en este escenario. Identifica tus puntos seguros.','Revisa tus rutas y mantén preparado tu plan familiar.'],
+  green:['Nivel verde · Normal','Nivel verde de referencia. Identifica tus puntos seguros.','Revisa tus rutas y mantén preparado tu plan familiar.'],
   yellow:['Nivel amarillo · Advertencia','Aumento preventivo del nivel de riesgo. Mantente atento.','Consulta las rutas disponibles y organiza a tu familia.'],
   orange:['Nivel naranja · Pre-evacuación','Es momento de preparar la evacuación preventiva.','Ten a mano tus documentos y sigue las indicaciones oficiales.'],
-  red:['Nivel rojo · Evacuación inmediata','Riesgo crítico simulado. Dirígete a un punto seguro.','Evacúa con calma según los avisos oficiales de tu comunidad.']
+  red:['Nivel rojo · Evacuación inmediata','Nivel rojo. Sigue las indicaciones oficiales de evacuación.','Evacúa con calma según los avisos oficiales de tu comunidad.']
 };
 const state = {
   page:'resumen',risk:'green',online:true,queue:[],pending:null,blocked:false,
@@ -45,26 +45,26 @@ function riskUpdate(level,showToast=true){if(!levels[level])return;state.risk=le
   const [title,message,advice]=levels[level];for(const id of ['summaryBanner','riskPanel'])el(id).dataset.risk=level;
   write('summaryRisk',title);write('summaryAdvice',message);write('riskTitle',title);write('riskMessage',message);write('riskSteps',advice);write('riskTimestamp','Último cambio: '+stamp());
   document.querySelectorAll('[data-risk]').forEach(b=>{const selected=b.dataset.risk===level;b.classList.toggle('active',selected);b.setAttribute('aria-pressed',String(selected))});
-  if(showToast)notify('Nivel de riesgo actualizado: '+title+'. Es solo una simulación.');
+  if(showToast)notify('Nivel actualizado en esta sesión: '+title+'. Consulta las alertas oficiales.');
   record('riesgo','Nivel de riesgo actualizado: '+title);
 }
 function netUpdate(){el('networkToggle').classList.toggle('off',!state.online);el('networkToggle').setAttribute('aria-pressed',String(state.online));
-  write('networkText',state.online?'Red simulada · 4 nodos':'Red simulada · sin nodos');
-  write('networkDetail',state.online?'La red simulada tiene 4 nodos disponibles.':'Sin nodos ficticios: los mensajes se pondrán en cola.');
+  write('networkText',state.online?'Red de referencia · 4 nodos':'Red de referencia · sin nodos');
+  write('networkDetail',state.online?'Vista de referencia: 4 nodos disponibles.':'Red local desactivada: los mensajes permanecerán en cola.');
   counters();
 }
-function switchNetwork(){state.online=!state.online;netUpdate();record('info',state.online?'Conexión ficticia restablecida':'Red simulada desconectada');
-  if(state.online&&state.queue.length){let count=state.queue.length;state.queue=[];record('info','Se enviaron '+count+' mensajes pendientes SOLO en la simulación');notify(count+' mensajes ficticios de la cola fueron procesados.');}
-  else notify(state.online?'Red de prueba conectada (no utiliza Bluetooth).':'Red de prueba desconectada; los nuevos mensajes quedarán en cola.');counters();}
-function setMe(status){let me=state.contacts.find(c=>c.name==='Tú (demo)');
-  if(!me){me={name:'Tú (demo)',relation:'Usuario de prueba',status};state.contacts.unshift(me);}else me.status=status;
-  const msg=status==='safe'?'«Estoy a salvo» registrado en este ensayo.':'SOS ficticio activado; no se llamó a servicios de emergencia.';
+function switchNetwork(){state.online=!state.online;netUpdate();record('info',state.online?'Conexión local activada en la interfaz':'Red local desactivada');
+  if(state.online&&state.queue.length){let count=state.queue.length;state.queue=[];record('info','Se procesaron '+count+' mensajes pendientes en esta sesión');notify(count+' mensajes de la cola fueron procesados localmente.');}
+  else notify(state.online?'Red activa en la vista local. Sin conexión Bluetooth externa.':'Red local desactivada; los nuevos mensajes quedarán en cola.');counters();}
+function setMe(status){let me=state.contacts.find(c=>c.name==='Tú');
+  if(!me){me={name:'Tú',relation:'Usuario actual',status};state.contacts.unshift(me);}else me.status=status;
+  const msg=status==='safe'?'«Estoy a salvo» registrado en esta sesión; no se envían notificaciones.':'SOS registrado localmente; no se contactó a servicios de emergencia.';
   write('emergencyFeedback',msg);record('auxilio',msg);notify(msg);renderFamily();renderTriage();counters();
-  if(status==='sos'){state.sequence++;state.incidents.unshift({id:'I-'+String(state.sequence).padStart(3,'0'),type:'Solicitud de auxilio (demo)',sector:'Quebrada Norte',detail:'Solicitud simulada del usuario',priority:'alta',assigned:false});renderIncidents();}
+  if(status==='sos'){state.sequence++;state.incidents.unshift({id:'I-'+String(state.sequence).padStart(3,'0'),type:'Solicitud de auxilio',sector:'Quebrada Norte',detail:'Solicitud local del usuario',priority:'alta',assigned:false});renderIncidents();}
 }
 function sendMessage(){let msg=el('quickMessage').value;
-  if(state.online){write('queueMessage','Mensaje entregado solo entre contactos ficticios de la demo.');record('info','Mensaje rápido entregado en simulación: '+msg);notify('Mensaje de prueba registrado.');}
-  else{state.queue.push(msg);write('queueMessage','Sin nodos de prueba; mensaje guardado en cola en esta pestaña.');record('info','Mensaje ficticio en cola: '+msg);notify('Mensaje pendiente en la cola local de la simulación.');}counters();}
+  if(state.online){write('queueMessage','Mensaje registrado localmente; no se enviaron notificaciones.');record('info','Mensaje registrado localmente: '+msg);notify('Mensaje registrado en esta sesión.');}
+  else{state.queue.push(msg);write('queueMessage','Red local desactivada; mensaje guardado en esta pestaña.');record('info','Mensaje guardado en cola local: '+msg);notify('Mensaje pendiente en la cola de esta sesión.');}counters();}
 function renderFamily(){const root=el('familyList');root.replaceChildren();
   const rank={sos:0,unknown:1,safe:2};const people=[...state.contacts].sort((a,b)=>rank[a.status]-rank[b.status]);
   for(const c of people){const row=document.createElement('div');row.className='contact';
@@ -83,33 +83,33 @@ function renderIncidents(){const root=el('incidentList');root.replaceChildren();
 function createReport(type,sector,detail){state.sequence++;const incident={id:'I-'+String(state.sequence).padStart(3,'0'),type,sector,detail,priority:type==='Persona que necesita apoyo'?'alta':'media',assigned:false};
   state.incidents.unshift(incident);state.pending=incident;
   write('pendingVerification',incident.type+' · '+incident.sector+' · pendiente de segunda confirmación');el('verifyButton').disabled=false;
-  const receipt=el('reportReceipt');receipt.className='empty-receipt receipt-success';receipt.replaceChildren();const icon=document.createElement('span');icon.textContent='✓';icon.style.fontSize='28px';const p=document.createElement('p');p.textContent='Reporte '+incident.id+' registrado localmente. Esperando verificación comunitaria simulada.';receipt.append(icon,p);
+  const receipt=el('reportReceipt');receipt.className='empty-receipt receipt-success';receipt.replaceChildren();const icon=document.createElement('span');icon.textContent='✓';icon.style.fontSize='28px';const p=document.createElement('p');p.textContent='Reporte '+incident.id+' registrado localmente. Pendiente de revisión en esta sesión.';receipt.append(icon,p);
   record('reporte','Reporte '+incident.id+': '+type+' · '+sector);renderIncidents();notify('Reporte registrado en esta sesión. No se difundió a personas reales.');
 }
-function verifyReport(){if(!state.pending)return;const incident=state.pending;state.pending=null;write('pendingVerification','Reporte '+incident.id+' confirmado por segundo vecino ficticio.');el('verifyButton').disabled=true;
-  if(incident.type==='Vía bloqueada'){state.blocked=true;el('blockedPath').hidden=false;write('routeResult','Aviso: se detectó una vía bloqueada ficticia. Consulta nuevamente una ruta alternativa.');}
-  record('reporte','Segunda verificación de '+incident.id+' completada (demo)');notify('Validación de segundo vecino completada en el prototipo.');
+function verifyReport(){if(!state.pending)return;const incident=state.pending;state.pending=null;write('pendingVerification','Reporte '+incident.id+' confirmado por segundo contacto.');el('verifyButton').disabled=true;
+  if(incident.type==='Vía bloqueada'){state.blocked=true;el('blockedPath').hidden=false;write('routeResult','Aviso: se detectó una vía bloqueada en el mapa de referencia. Consulta nuevamente una ruta alternativa.');}
+  record('reporte','Segunda verificación de '+incident.id+' completada (sesión)');notify('Validación del reporte completada en esta sesión.');
 }
 function routePlan(){const refuge=el('refugeSelect').value;const full=refuge==='refugio';
-  write('refugeName',full?'Refugio Temporal B':'Zona Alta A');write('refugeCapacity',full?'Capacidad de prueba completa: 20 de 20 personas':'Capacidad de prueba: 12 de 20 personas');
-  if(full){write('routeResult','Refugio Temporal B sin aforo en este escenario. Se recomienda seleccionar Zona Alta A.');el('routePath').setAttribute('stroke','#D32F2F');}
+  write('refugeName',full?'Refugio Temporal B':'Zona Alta A');write('refugeCapacity',full?'Aforo referencial completo: 20 de 20 personas':'Aforo referencial: 12 de 20 personas');
+  if(full){write('routeResult','Refugio Temporal B sin aforo disponible en el mapa de referencia. Se recomienda seleccionar Zona Alta A.');el('routePath').setAttribute('stroke','#D32F2F');}
   else{write('routeResult',state.blocked?'Ruta alternativa ilustrativa: inicio → sendero norte → Zona Alta A, evitando la vía bloqueada.':'Ruta ilustrativa: inicio → cruce principal → Zona Alta A.');el('routePath').setAttribute('stroke','#0056B3');}
-  record('info','Consulta de ruta ficticia hacia '+(full?'Refugio Temporal B':'Zona Alta A'));
+  record('info','Consulta de ruta de referencia hacia '+(full?'Refugio Temporal B':'Zona Alta A'));
 }
-function blockRoad(){state.blocked=true;el('blockedPath').hidden=false;createReport('Vía bloqueada','Quebrada Norte','Bloqueo de prueba en el cruce principal');write('routeResult','Bloqueo registrado. Presiona «Consultar ruta» para obtener una alternativa ficticia.');showPage('mapa',false);}
+function blockRoad(){state.blocked=true;el('blockedPath').hidden=false;createReport('Vía bloqueada','Quebrada Norte','Bloqueo registrado en el mapa de referencia');write('routeResult','Bloqueo registrado. Presiona «Consultar ruta» para consultar una alternativa en el mapa.');showPage('mapa',false);}
 function assignIncident(){const item=state.incidents.find(x=>x.priority==='alta'&&!x.assigned)||state.incidents.find(x=>!x.assigned);if(!item){write('assignmentFeedback','No hay incidentes pendientes de asignación.');return;}
-  item.assigned=true;write('assignmentFeedback',item.id+' asignado a brigada comunitaria de prueba.');record('info','Asignación ficticia de brigada a '+item.id);renderIncidents();notify('Se asignó una tarea de prueba.');}
+  item.assigned=true;write('assignmentFeedback',item.id+' asignado en esta sesión a una brigada.');record('info','Asignación local de brigada a '+item.id);renderIncidents();notify('La tarea quedó asignada en esta sesión.');}
 function renderHistory(){const root=el('historyList');root.replaceChildren();const type=el('historyFilter').value;const list=state.log.filter(x=>type==='all'||x.type===type);if(!list.length){let item=document.createElement('li');item.textContent='Aún no hay eventos registrados.';root.append(item);return;}
   for(const v of list){const li=document.createElement('li');const time=document.createElement('time');time.textContent=v.time;const desc=document.createElement('span');desc.textContent=v.text;li.append(time,desc);root.append(li);}
 }
 function renderActivity(){const root=el('summaryActivity');root.replaceChildren();for(const v of state.log.slice(0,4)){const li=document.createElement('li');li.textContent=v.text;root.append(li);}}
 function checkUpdate(){const done=document.querySelectorAll('.shopCheck:checked').length,total=4;el('checkBar').style.width=(done/total*100)+'%';write('checkLabel',done+' de '+total+' acciones');}
-function announcement(message){write('merchantResult',message);record('info',message);notify('Acción del comercio registrada en la simulación.');}
-function audioSample(){try{const AC=window.AudioContext||window.webkitAudioContext;if(!AC){notify('Tu navegador no permite reproducir audio de prueba.');return;}const ctx=new AC();const oscillator=ctx.createOscillator(),gain=ctx.createGain();oscillator.type='sine';oscillator.frequency.setValueAtTime(state.risk==='red'?800:520,ctx.currentTime);gain.gain.setValueAtTime(.065,ctx.currentTime);gain.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+.18);oscillator.connect(gain);gain.connect(ctx.destination);oscillator.start();oscillator.stop(ctx.currentTime+.2);oscillator.onended=()=>ctx.close();if(navigator.vibrate)navigator.vibrate(80);record('riesgo','Sonido local de prueba reproducido.');}
-  catch{notify('El navegador bloqueó el audio de demostración.');}}
-function startTimer(){if(state.timerHandle)return;if(state.timer<=0)state.timer=25;state.timerHandle=setInterval(()=>{state.timer-=1;write('countdownValue',String(Math.max(0,state.timer)).padStart(2,'0')+':00');if(state.timer<=0){clearInterval(state.timerHandle);state.timerHandle=null;record('info','Terminó el tiempo ficticio de preparación');notify('Terminó el escenario simulado de 25 minutos.');}},1000);record('info','Cuenta regresiva acelerada iniciada');}
+function announcement(message){write('merchantResult',message);record('info',message);notify('Acción comercial registrada en esta sesión.');}
+function audioSample(){try{const AC=window.AudioContext||window.webkitAudioContext;if(!AC){notify('Tu navegador no permite reproducir audio en el navegador.');return;}const ctx=new AC();const oscillator=ctx.createOscillator(),gain=ctx.createGain();oscillator.type='sine';oscillator.frequency.setValueAtTime(state.risk==='red'?800:520,ctx.currentTime);gain.gain.setValueAtTime(.065,ctx.currentTime);gain.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+.18);oscillator.connect(gain);gain.connect(ctx.destination);oscillator.start();oscillator.stop(ctx.currentTime+.2);oscillator.onended=()=>ctx.close();if(navigator.vibrate)navigator.vibrate(80);record('riesgo','Aviso sonoro reproducido localmente.');}
+  catch{notify('El navegador bloqueó la reproducción del aviso.');}}
+function startTimer(){if(state.timerHandle)return;if(state.timer<=0)state.timer=25;state.timerHandle=setInterval(()=>{state.timer-=1;write('countdownValue',String(Math.max(0,state.timer)).padStart(2,'0')+':00');if(state.timer<=0){clearInterval(state.timerHandle);state.timerHandle=null;record('info','Terminó el tiempo de preparación de la sesión');notify('Terminó el temporizador de preparación.');}},1000);record('info','Cuenta regresiva acelerada iniciada');}
 function stopTimer(){clearInterval(state.timerHandle);state.timerHandle=null;state.timer=25;write('countdownValue','25:00');}
-function setSOS(){setMe('sos');record('auxilio','Solicitud SOS de prioridad alta generada en la demo');}
+function setSOS(){setMe('sos');record('auxilio','Solicitud SOS registrada en esta sesión');}
 function initializeSOS(){const button=el('sosButton');let pressed=false,timer=null,startAt=0;
  function begin(e){if(e?.button!==undefined&&e.button!==0)return;if(pressed)return;pressed=true;startAt=Date.now();button.classList.add('holding');
    timer=setTimeout(()=>{if(!pressed)return;pressed=false;button.classList.remove('holding');timer=null;setSOS();},1000);}
@@ -133,9 +133,9 @@ el('safeButton').addEventListener('click',()=>setMe('safe'));el('sendMessage').a
 el('incidentFilter').addEventListener('change',renderIncidents);el('assignButton').addEventListener('click',assignIncident);
 el('startTimer').addEventListener('click',startTimer);el('resetTimer').addEventListener('click',stopTimer);
 document.querySelectorAll('.shopCheck').forEach(b=>b.addEventListener('change',checkUpdate));
-el('closeShop').addEventListener('click',()=>announcement('Aviso de cierre preventivo registrado en la demo; no se notificó a nadie.'));
-el('relativeHelp').addEventListener('click',()=>announcement('Solicitud de apoyo para '+el('relativeType').value.toLowerCase()+' registrada en la simulación.'));
+el('closeShop').addEventListener('click',()=>announcement('Aviso de cierre guardado en la sesión; no se enviaron notificaciones.'));
+el('relativeHelp').addEventListener('click',()=>announcement('Solicitud de apoyo para '+el('relativeType').value.toLowerCase()+' registrada en esta sesión.'));
 el('historyFilter').addEventListener('change',renderHistory);
 el('resetDemo').addEventListener('click',()=>location.reload());
 window.addEventListener('hashchange',()=>showPage(location.hash.slice(1),false));
-initializeSOS();renderFamily();renderTriage();renderIncidents();netUpdate();record('info','Escenario ficticio iniciado · Quebrada Norte');riskUpdate('green',false);counters();showPage(location.hash.slice(1)||'resumen',false);
+initializeSOS();renderFamily();renderTriage();renderIncidents();netUpdate();record('info','Sesión iniciada · Quebrada Norte');riskUpdate('green',false);counters();showPage(location.hash.slice(1)||'resumen',false);
